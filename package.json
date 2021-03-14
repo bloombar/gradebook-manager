@@ -1,0 +1,32 @@
+{
+  "name": "copy-google-forms-quiz-grades",
+  "version": "0.0.1",
+  "description": "This project will copy grades from a quiz created in Google Forms to a specific column in a Google Sheet. This is intended to be used for copying Google Forms quiz grades into a class gradebook.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bloombar/copy-google-sheet-data.git"
+  },
+  "keywords": [
+    "google",
+    "forms",
+    "google",
+    "sheets",
+    "automation",
+    "copy"
+  ],
+  "author": "Foo Barstein",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/bloombar/copy-google-sheet-data/issues"
+  },
+  "homepage": "https://github.com/bloombar/copy-google-sheet-data#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "googleapis": "^39.2.0",
+    "yargs": "^16.2.0"
+  }
+}
