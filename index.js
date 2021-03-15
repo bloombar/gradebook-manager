@@ -8,24 +8,27 @@ const {
   GoogleAppScriptsAPIService,
 } = require("./services/GoogleAppScriptsAPIService")
 
-// connect to google apps script api
-const appsScriptsAPI = new GoogleAppScriptsAPIService({
-  // If modifying these scopes, delete token.json.
-  // The file token.json stores the user's access and refresh tokens, and is
-  // created automatically when the authorization flow completes for the first
-  // time.
-  scopes: [
-    "https://www.googleapis.com/auth/script.projects",
-    "https://www.googleapis.com/auth/script.deployments",
-    "https://www.googleapis.com/auth/script.scriptapp",
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/forms",
-  ],
-  credentialsPath: "./credentials/credentials.json",
-  tokenPath: "./credentials/token.json",
-}).connect({ callback: main })
+main()
 
-async function main(auth) {
+async function main() {
+  // connect to google apps script api
+  const gass = new GoogleAppScriptsAPIService({
+    // If modifying these scopes, delete token.json.
+    // The file token.json stores the user's access and refresh tokens, and is
+    // created automatically when the authorization flow completes for the first
+    // time.
+    scopes: [
+      "https://www.googleapis.com/auth/script.projects",
+      "https://www.googleapis.com/auth/script.deployments",
+      "https://www.googleapis.com/auth/script.scriptapp",
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/forms",
+    ],
+    credentialsPath: "./credentials/credentials.json",
+    tokenPath: "./credentials/token.json",
+  })
+  await gass.connect()
+
   // determine what to do based on command line arguments
   if (argv._ == "deploy") {
     console.log(`deploying ${argv.script}...`)
@@ -40,7 +43,7 @@ async function main(auth) {
   } else if (argv._ == "run") {
     // run a script with the supplied id
     console.log(`running script ${argv.scriptId}...`)
-    const res = await run(auth, {
+    const res = await gass.run({
       scriptId: argv.scriptId || process.env.DEFAULT_SCRIPT_ID, // either a supplied script id or the default one
       functionName: argv.function || process.env.DEFAULT_SCRIPT_FUNCTION_NAME,
       parameters: [argv.quizId || process.env.DEFAULT_QUIZ_ID],
@@ -117,26 +120,4 @@ async function deploy(auth, { scriptSourceFilePath, scriptManifestFilePath }) {
   // console.log(`https://script.google.com/d/${res.data.scriptId}/edit`)
 
   return scriptId
-}
-
-async function run(auth, { scriptId, functionName, parameters }) {
-  // create new script
-  const script = google.script({ version: "v1", auth })
-
-  // run it
-  res = await script.scripts
-    .run({
-      auth,
-      scriptId,
-      resource: {
-        function: functionName,
-        parameters: parameters,
-        devMode: true,
-      },
-    })
-    .catch(err => console.log(`The API run method returned an error: ${err}`))
-
-  // console.log(res.data)
-
-  return res.data
 }
