@@ -36,9 +36,9 @@ function GoogleAppScriptsAPIService(config) {
    * Creates a new script project, upload a file, and log the script's URL.
    * @param {Object} parameters The source file path and manifest file path for the script to deploy
    */
-  this.deploy = ({ scriptSourceFilePath, scriptManifestFilePath }) => {
+  this.deploy = async ({ scriptSourceFilePath, scriptManifestFilePath }) => {
     // create new script
-    const script = google.script({ version: "v1", auth:this.auth })
+    const script = google.script({ version: "v1", auth: this.auth })
     // let res = script.projects.get(process.env.gcpProjectId)
 
     let res = await script.projects
@@ -101,7 +101,6 @@ function GoogleAppScriptsAPIService(config) {
    */
   this.connect = async () => {
     // Load client secrets from a local file.
-    console.log("opening")
     const content = await fs
       .readFile(config.credentialsPath)
       .catch(err => console.log("Error loading client secret file:", err))
@@ -118,7 +117,6 @@ function GoogleAppScriptsAPIService(config) {
    * @param {function} callback The callback to call with the authorized client.
    */
   this.authorize = async credentials => {
-    console.log("authorizing")
     const { client_secret, client_id, redirect_uris } = credentials.installed
     const oAuth2Client = new google.auth.OAuth2(
       client_id,
