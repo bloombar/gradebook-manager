@@ -17,6 +17,7 @@ const getQuizGrades = quizId => {
   // iterate through each submission
   responses.forEach(response => {
     const email = response.getRespondentEmail() // the respondent's email address
+    const timestamp = response.getTimestamp()
     let totalScore = 0 // total score on the quiz
     let totalAvailableScore = 0 // total available points on the quiz
     // get individual question items from this response
@@ -41,7 +42,13 @@ const getQuizGrades = quizId => {
       `${email} total score: ${totalScore} out of ${totalAvailableScore} (${percentScore}%)`
     )
     // add to array
-    grades.push({ email, totalScore, totalAvailableScore, percentScore })
+    grades.push({
+      email,
+      timestamp,
+      totalScore,
+      totalAvailableScore,
+      percentScore,
+    })
   }) // foreach response
 
   return grades

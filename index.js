@@ -31,13 +31,14 @@ async function main() {
 
   // determine what to do based on command line arguments
   if (argv._ == "deploy") {
-    console.log(`deploying ${argv.script}...`)
+    const scriptPath = argv.script || process.env.DEFAULT_SCRIPT_SOURCE_FILE
+    const manifestPath =
+      argv.manifest || process.env.DEFAULT_SCRIPT_MANIFEST_FILE
+    console.log(`deploying ${scriptPath}...`)
     // deploy a script with the supplied source and manifest files
-    const scriptId = await deploy(auth, {
-      scriptSourceFilePath:
-        argv.script || process.env.DEFAULT_SCRIPT_SOURCE_FILE,
-      scriptManifestFilePath:
-        argv.manifest || process.env.DEFAULT_SCRIPT_MANIFEST_FILE,
+    const scriptId = await gass.deploy({
+      scriptSourceFilePath: scriptPath,
+      scriptManifestFilePath: manifestPath,
     })
     console.log(`Script deployed: https://script.google.com/d/${scriptId}/edit`)
   } else if (argv._ == "run") {
@@ -50,7 +51,9 @@ async function main() {
     })
 
     // output the results as csv
-    console.log(`email,total_score,total_points_available,total_score_percent`)
+    console.log(
+      `email,timestamp,total_score,total_points_available,total_score_percent`
+    )
 
     res.response.result.forEach(result => {
       // output the grade for each result
