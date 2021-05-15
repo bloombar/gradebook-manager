@@ -100,4 +100,4 @@ node . run --scriptId <script_id> --function <function_name> --quizId <quiz_id>
 
 Writing and debugging apps script during development is easiest done in the Apps Script web-based IDE. The IDE includes a [lightweight error log](https://developers.google.com/apps-script/guides/logging#basic_logging).
 
-Complete error logs are available in Google Cloud Platform logs.
+Complete error logs are available in Google Cloud Platform logs. Go to your Google Cloud Platform project, and click the main menu's `Operations`->`Logging`->`Logs Explorer` link.
