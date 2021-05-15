@@ -46,22 +46,33 @@ async function main() {
   } // deploy
   else if (argv._ == "run") {
     // run a script with the supplied id
-    console.log(`running script ${argv.scriptId}...`)
+    const scriptId = argv.scriptId || process.env.DEFAULT_SCRIPT_ID // either a supplied script id or the default one
+    const functionName =
+      argv.function || process.env.DEFAULT_SCRIPT_FUNCTION_NAME
+    const quizId = argv.quizId || process.env.DEFAULT_QUIZ_ID
+
+    console.log(`running script ${scriptId}...`)
+
+    // run it
     const res = await gass.run({
-      scriptId: argv.scriptId || process.env.DEFAULT_SCRIPT_ID, // either a supplied script id or the default one
-      functionName: argv.function || process.env.DEFAULT_SCRIPT_FUNCTION_NAME,
-      parameters: [argv.quizId || process.env.DEFAULT_QUIZ_ID],
+      scriptId: scriptId,
+      functionName: functionName,
+      parameters: [quizId],
     })
+
+    if (res.error) {
+      console.error(JSON.stringify(res, null, 2))
+      return
+    }
 
     // output the results as csv
     console.log(
       `email,timestamp,total_score,total_points_available,total_score_percent`
     )
-
     res.response.result.forEach(result => {
       // output the grade for each result
       console.log(
-        `${result.email},${result.totalScore},${result.totalAvailableScore},${result.percentScore}`
+        `${result.email},${result.timestamp},${result.totalScore},${result.totalAvailableScore},${result.percentScore}`
       )
     })
   } // run

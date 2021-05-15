@@ -17,7 +17,7 @@ const getQuizGrades = quizId => {
   // iterate through each submission
   responses.forEach(response => {
     const email = response.getRespondentEmail() // the respondent's email address
-    const timestamp = response.getTimestamp()
+    const timestamp = response.getTimestamp() + "" // must be a string or can't be included in return object for some reason
     let totalScore = 0 // total score on the quiz
     let totalAvailableScore = 0 // total available points on the quiz
     // get individual question items from this response
