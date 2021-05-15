@@ -8,11 +8,17 @@ The default scripts in this project will pull grades from any Quiz created in Go
 
 ### Create a Google Cloud Project
 
-Go to the [Google Cloud Platform console](https://console.cloud.google.com/) and create a new project.
+Go to the [Google Cloud Platform console](https://console.cloud.google.com/) and create a new project. Ever project is given a project number - note this somewhere for later use.
 
 ### Enable Google Apps Script API
 
 In your project's API's section, [enable Google Apps Script API](https://developers.google.com/apps-script/api/quickstart/nodejs). This will allow you to run scripts on Google Forms and other Google Apps.
+
+### Enable Google Sheets API
+
+In your project's API's section, enable Goole Sheets API]. This will allow your Apps Scripts to interact with Google Sheets. The following link, with `<project_number>` replaced with your own Google Cloud Project number, can be used to directly access the appropriate screen where the Google Sheets API can be enabled.
+
+- `https://console.developers.google.com/apis/api/sheets.googleapis.com/overview?project=<project_number>`
 
 ### Set up your project's OAuth Consent Screen
 
