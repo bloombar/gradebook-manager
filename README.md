@@ -12,7 +12,7 @@ Go to the [Google Cloud Platform console](https://console.cloud.google.com/) and
 
 ### Enable Google Apps Script API
 
-In your project's API's section, [enable Google Apps Script API](https://developers.google.com/apps-script/api/quickstart/nodejs). This will allow you to run scripts on Google Forms and other Google Apps.
+In your project's API's section, [enable Google Apps Script API](https://developers.google.com/workspace/guides/create-project). This will allow you to run scripts on Google Forms and other Google Apps.
 
 ### Enable Google Sheets API
 
