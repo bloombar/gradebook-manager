@@ -126,7 +126,7 @@ function GoogleAppScriptsAPIService(config) {
     // Check if we have previously stored a token.
     const token = await fs
       .readFile(config.tokenPath)
-      .catch(err => this.getAccessToken(oAuth2Client, callback))
+      .catch(err => this.getAccessToken(oAuth2Client))
     oAuth2Client.setCredentials(JSON.parse(token))
     return oAuth2Client
   }
